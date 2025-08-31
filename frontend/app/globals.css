@@ -1,0 +1,396 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&family=Noto+Sans:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --wood-primary: #8b6f47;
+  --wood-secondary: #a0845c;
+  --wood-light: #d4a574;
+  --wood-dark: #5c4a3a;
+  --board-line: #2a1810;
+  --bg-primary: #f5e6d3;
+  --bg-secondary: #faf6f0;
+  --text-primary: #2c1810;
+  --text-secondary: #5c4a3a;
+  --accent-gold: #d4a574;
+  --accent-red: #8b2c2c;
+}
+
+body {
+  font-family: 'Noto Sans', sans-serif;
+  background: linear-gradient(135deg, #f5e6d3 0%, #e8dcc3 100%);
+  min-height: 100vh;
+  color: var(--text-primary);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Noto Serif', serif;
+}
+
+/* Paper texture background pattern */
+.paper-texture {
+  background-image: 
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(139, 111, 71, 0.03) 10px,
+      rgba(139, 111, 71, 0.03) 20px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 10px,
+      rgba(139, 111, 71, 0.03) 10px,
+      rgba(139, 111, 71, 0.03) 20px
+    );
+}
+
+/* Traditional button styles */
+.btn-primary {
+  background: linear-gradient(135deg, var(--wood-primary) 0%, var(--wood-secondary) 100%);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    inset 0 1px 2px rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--wood-dark);
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .btn-primary {
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+  }
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 6px 12px rgba(0, 0, 0, 0.15),
+    inset 0 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+.btn-secondary {
+  background: white;
+  color: var(--text-primary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: 2px solid var(--wood-primary);
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .btn-secondary {
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+  }
+}
+
+.btn-secondary:hover {
+  background: var(--bg-primary);
+  transform: translateY(-2px);
+}
+
+/* Card styles */
+.game-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 
+    0 10px 30px rgba(92, 74, 58, 0.1),
+    0 1px 2px rgba(92, 74, 58, 0.05);
+  border: 1px solid rgba(139, 111, 71, 0.1);
+  overflow: hidden;
+}
+
+.game-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--wood-primary), var(--accent-gold), var(--wood-primary));
+}
+
+/* Input styles */
+.game-input {
+  background: white;
+  border: 2px solid rgba(139, 111, 71, 0.2);
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.game-input:focus {
+  outline: none;
+  border-color: var(--wood-primary);
+  box-shadow: 0 0 0 3px rgba(139, 111, 71, 0.1);
+}
+
+/* Decorative elements */
+.divider-ornament {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--wood-primary) 20%,
+    var(--accent-gold) 50%,
+    var(--wood-primary) 80%,
+    transparent 100%
+  );
+  margin: 2rem 0;
+  position: relative;
+}
+
+.divider-ornament::before {
+  content: '◈';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  color: var(--wood-primary);
+  padding: 0 0.5rem;
+  font-size: 1.2rem;
+}
+
+/* Gomoku Board Styles */
+.gomoku-board-container {
+  padding: 20px;
+  background: linear-gradient(135deg, #8b6f47 0%, #a0845c 100%);
+  border-radius: 12px;
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.3),
+    inset 0 2px 4px rgba(255, 255, 255, 0.1),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+  border: 3px solid #5c4a3a;
+  display: inline-block;
+}
+
+@media (max-width: 640px) {
+  .gomoku-board-container {
+    padding: 10px;
+    border-width: 2px;
+  }
+}
+
+.gomoku-board {
+  width: 600px;
+  height: 600px;
+  position: relative;
+  background: linear-gradient(
+    135deg,
+    #d4a574 0%,
+    #c19656 25%,
+    #d4a574 50%,
+    #c19656 75%,
+    #d4a574 100%
+  );
+  background-size: 20px 20px;
+  border-radius: 8px;
+  box-shadow: 
+    inset 0 2px 10px rgba(0, 0, 0, 0.2),
+    inset 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile responsive board */
+.gomoku-board-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 10px 0;
+}
+
+@media (max-width: 640px) {
+  .gomoku-board-container {
+    padding: 10px;
+    border-width: 2px;
+  }
+}
+
+.board-grid {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.stones-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.stone-position {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  transform: translate(-50%, -50%);
+}
+
+.stone-placement {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+
+.stone-placement:disabled {
+  cursor: not-allowed;
+}
+
+
+.stone {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  position: relative;
+  animation: placeStone 0.3s ease-out;
+  cursor: default;
+}
+
+@keyframes placeStone {
+  0% {
+    transform: scale(0) rotate(180deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1) rotate(90deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.black-stone {
+  background: radial-gradient(circle at 30% 30%, #4a4a4a, #1a1a1a);
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.4),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.3),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+.white-stone {
+  background: radial-gradient(circle at 30% 30%, #ffffff, #d0d0d0);
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.1),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.8);
+}
+
+.stone-inner {
+  position: absolute;
+  top: 30%;
+  left: 30%;
+  width: 40%;
+  height: 40%;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.black-stone .stone-inner {
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.15), transparent);
+}
+
+.white-stone .stone-inner {
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.5), transparent);
+}
+
+/* Stone indicator for player info */
+.stone-indicator {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  position: relative;
+  display: inline-block;
+}
+
+.stone-indicator.black-stone {
+  background: radial-gradient(circle at 30% 30%, #4a4a4a, #1a1a1a);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.stone-indicator.white-stone {
+  background: radial-gradient(circle at 30% 30%, #ffffff, #d0d0d0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.stone-indicator .stone-inner {
+  width: 8px;
+  height: 8px;
+  top: 6px;
+  left: 6px;
+}
+
+/* Game status badge */
+.status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: linear-gradient(135deg, var(--wood-light), var(--accent-gold));
+  color: var(--text-primary);
+  border: 1px solid var(--wood-primary);
+}
+
+/* Player info card */
+.player-card {
+  background: linear-gradient(135deg, #faf6f0, #f5e6d3);
+  border: 2px solid var(--wood-primary);
+  border-radius: 8px;
+  padding: 1rem;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.player-card.active {
+  background: linear-gradient(135deg, var(--wood-light), var(--accent-gold));
+  box-shadow: 0 4px 12px rgba(212, 165, 116, 0.3);
+  transform: translateY(-2px);
+}
+
+.player-card.active::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 8px;
+  padding: 2px;
+  background: linear-gradient(45deg, var(--wood-primary), var(--accent-gold));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: shimmer 3s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
